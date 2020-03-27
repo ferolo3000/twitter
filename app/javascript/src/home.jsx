@@ -4,9 +4,6 @@ import App from './components/App'
 
 import './home.scss';
 
-// const Home = props => (
-//   <div>Home page Fer</div>
-// )
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
