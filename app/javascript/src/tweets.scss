@@ -1,0 +1,87 @@
+#top-navbar {
+  background-color: #03A9F4;
+  margin-bottom: 50px;
+}
+
+.profileThumb{
+  min-width: 50px;
+}
+
+.iconStyling{
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.replyDisplay{
+  background-color: rgb(250,250,250);
+}
+
+.btn{
+  span{
+  font-weight: bold;
+    color: white;
+  }
+}
+
+/* User data */
+.profileCard {
+  background: #fff;
+  padding: 10px 0;
+  border-radius: 5px;
+}
+
+.user-field .username {
+  font-weight: 700;
+  font-size: 18px;
+  color: inherit!important;
+}
+
+.user-field .screenName {
+  color: #66757f;
+  font-size: 12px;
+  line-height: 16px;
+  text-decoration: none;
+}
+
+.user-stats div {
+  margin-top: 5px;
+}
+
+.user-stats a {
+  text-decoration: none;
+}
+
+.user-stats a span:first-child {
+  color: #8c9ca9;
+  font-size: 10px;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.user-stats a span:first-child:hover {
+  color: #0084B4;
+}
+
+/* trends section */
+.trends {
+  background: #fff;
+  padding: 10px 0;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.trends-header {
+  margin-bottom: 10px;
+}
+
+.trends-header span:first-child {
+  color: #66757f;
+  font-size: 18px;
+  font-weight: 300;
+}
+
+.trends-list {
+  list-style: none;
+  padding-left: 0;
+}

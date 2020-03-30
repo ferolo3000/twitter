@@ -1,13 +1,19 @@
+import React from "react"
+import ReactDOM from 'react-dom'
+
+import 'font-awesome/css/font-awesome.min.css'
+import './tweets.scss';
+
 class Tweets extends React.Component{
   constructor(props){
     super(props)
 
     this.state = {
       allPosts: [{
-        title: 'LOADING',
-        body: 'LOADING',
-        name: 'LOADING',
-        username: '@LOADING'
+        title: 'Loading...',
+        body: 'Loading...',
+        name: 'Loading...',
+        username: 'Loading...'
       }],
 
       userPosts: []
@@ -43,14 +49,11 @@ class Tweets extends React.Component{
   sortPosts(array){
     var currentIndex = array.length, temporaryValue, randomIndex;
 
-    // While there remain elements to shuffle...
     while (0 !== currentIndex) {
 
-      // Pick a remaining element...
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex -= 1;
 
-      // And swap it with the current element.
       temporaryValue = array[currentIndex];
       array[currentIndex] = array[randomIndex];
       array[randomIndex] = temporaryValue;
@@ -116,19 +119,22 @@ class Tweets extends React.Component{
 }
 
 class Userbar extends React.Component{
+
   render(){
     return(
-      <nav className="navbar fixed-top navbar-expand-sm navbar-dark bg-danger">
-        <a className="navbar-brand" href="#"><i className="fas fa-user"></i></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#userLinks" aria-controls="userLinks" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+      <nav id="top-navbar" className="navbar navbar-static-top navbar-expand-sm">
+        <a className="navbar-brand" href="#"><img src="https://img.icons8.com/color/48/000000/twitter-squared.png"/></a>
+        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#userLinks" aria-controls="userLinks" aria-expanded="false" aria-label="Toggle navigation">
+        <span className="navbar-toggler-icon"></span>
+        </button>
         <div className="collapse navbar-collapse" id="userLinks">
+          <form className="form-inline my-2 my-lg-0">
+            <input className="form-control mr-sm-2" type="search" placeholder="Search" />
+            <button className="btn btn-light" type="submit">Go</button>
+          </form>
           <ul className="navbar-nav ml-auto">
-            <li className="nav-item active"><a className="nav-link" href="#">Feed</a></li>
-            <li className="nav-item"><a className="nav-link" href="#">Messages</a></li>
-            <li className="nav-item"><a className="nav-link" href="#">Notifications</a></li>
-            <li className="nav-item"><a className="nav-link" href="#">Settings</a></li>
+            <li className="nav-item active"><a className="nav-link" href="/user"><img src="https://img.icons8.com/ios-glyphs/30/000000/user.png"/></a></li>
+            <li className="nav-item active"><a className="nav-link" href="/"><img src="https://img.icons8.com/android/24/000000/logout-rounded.png"/></a></li>
           </ul>
         </div>
        </nav>
@@ -141,7 +147,7 @@ class CreatePost extends React.Component{
     super(props)
 
     this.state = {
-      postText: ''
+      postText: '',
     }
 
     this.updatePostText = this.updatePostText.bind(this)
@@ -155,22 +161,70 @@ class CreatePost extends React.Component{
   }
 
   submitPostText(){
-    if(this.state.postText.length > 0){
+    if(this.state.postText.length > 0 && this.state.postText.length < 140){
       this.props.post(this.state.postText)
       document.getElementById('postField').value = ''
 
       this.setState({
         postText: ''
       })
+    } else {
+      alert("Please check post length")
     }
   }
 
   render(){
     return(
-     <div className="mb-2 fixedMenuFix">
-      <input id="postField" onChange={this.updatePostText} type="text" className="form-control"  placeholder="What's up?"/>
-      <button onClick={this.submitPostText} className="btn btn-large btn-warning btn-block"><span>Post</span></button>
-     </div>
+      <div className="row">
+        <div className="col-3 profile-trends">
+          <div className="profileCard col-xs-12">
+            <div className="user-field col-xs-12">
+              <a className="username">User</a><br />
+              <a className="screenName">@User</a>
+            </div>
+            <div className="user-stats">
+              <div className="col-xs-3">
+                <a>
+                  <span>Tweets<br /></span>
+                  <span className="user-stats-tweets">10</span>
+                </a>
+              </div>
+              <div className="col-xs-4">
+                <a>
+                  <span>Following<br /></span>
+                  <span className="user-stats-following">0</span>
+                </a>
+              </div>
+              <div className="col-xs-4">
+                <a>
+                  <span>Followers<br /></span>
+                  <span className="user-stats-followers">0</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="col-6">
+          <div className="post-form">
+            <input id="postField" onChange={this.updatePostText} type="text" className="form-control" placeholder="What's happening?" />
+            <button onClick={this.submitPostText} className="btn btn-primary float-right mt-1"><span>Post</span></button>
+          </div>
+        </div>
+        <div className="trends col-3">
+          <div className="col-xs-12">
+            <div className="trends-header">
+              <span>Trends</span>
+            </div>
+            <ul className="trends-list">
+              <li><a href="#">#FullStack</a></li>
+              <li><a href="#">#Altcademy</a></li>
+              <li><a href="#">#React</a></li>
+              <li><a href="#">#rails</a></li>
+              <li><a href="#">#API</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
     )
   }
 }
@@ -241,7 +295,7 @@ class Post extends React.Component{
   addReply(reply){
     let replyData = {
       name: 'You',
-      username: 'codepen_user',
+      username: 'reply_user',
       replyID: this.postReplies.length,
       text: reply,
       userID: 11
@@ -254,10 +308,18 @@ class Post extends React.Component{
   }
   render(){
     return(
-      <div className="row mx-auto justify-content-start border mt-1 p-2 w-100 align-items-center">
-        <PostContent postData={this.props.postData} />
-        <PostInput replyWindowOpen={this.replyWindowOpen}/>
-        <ReplyWindow post={this.addReply} replies={this.state.replies} inlineStyling={this.state.replyWindowStyling} replyName={this.props.postData.username}/>
+      <div className="row">
+        <div className="col-3">
+        </div>
+        <div className="col-6">
+          <div className="row mx-auto justify-content-start border mt-1 p-2 align-items-center">
+            <PostContent postData={this.props.postData} />
+            <PostInput replyWindowOpen={this.replyWindowOpen}/>
+            <ReplyWindow post={this.addReply} replies={this.state.replies} inlineStyling={this.state.replyWindowStyling} replyName={this.props.postData.username}/>
+          </div>
+        </div>
+        <div className="col-3">
+        </div>
       </div>
     )
   }
@@ -422,8 +484,8 @@ class ReplyField extends React.Component{
     return(
      <div className="col-sm-12 form-inline mt-1">
         <div className="input-group flex-grow-1">
-         <div class="input-group-prepend">
-          <div class="input-group-text">@{this.props.replyName}</div>
+         <div className="input-group-prepend">
+          <div className="input-group-text">@{this.props.replyName}</div>
         </div>
          <input type="text" onChange={this.updateReplyText} id={this.id} className="form-control"  placeholder="Say something nice!"/>
         </div>
@@ -435,3 +497,11 @@ class ReplyField extends React.Component{
 
 
 export default Tweets;
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  ReactDOM.render(
+    <Tweets />,
+    document.body.appendChild(document.createElement('div')),
+  )
+})
