@@ -9,10 +9,10 @@ class Tweets extends React.Component{
 
     this.state = {
       allPosts: [{
-        title: 'Hello World',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        name: 'Bill Gates',
-        username: 'bill_gates'
+        title: 'Loading...',
+        body: 'Loading...',
+        name: 'Loading...',
+        username: 'Loading...'
       }],
 
       userPosts: []
@@ -25,6 +25,24 @@ class Tweets extends React.Component{
     this.loaded = false
     this.postDataWithoutUserInfo = []
     this.newUserPosts = []
+  }
+
+  componentDidMount(){
+
+    if(this.loaded === false){
+      fetch('https://jsonplaceholder.typicode.com/posts')
+      .then(response => response.json())
+      .then(json => this.sortPosts(json))
+      .then(()=>{
+        return fetch('https://jsonplaceholder.typicode.com/users')
+      })
+      .then(response => response.json())
+      .then(json => this.matchAccounts(json))
+      .then(json => this.setState({ allPosts: json }))
+      .catch(error=>console.log(error))
+    }
+
+    this.loaded = true
   }
 
   sortPosts(array){
@@ -376,12 +394,10 @@ class PostInput extends React.Component{
 
   render(){
     return(
-    <div className="col-sm-12 mt-1 d-flex justify-content-around">
-      <ul>
-        <li className="d-inline"><a className="nav-link" href="#"><img src="https://img.icons8.com/ios-glyphs/30/000000/user.png"/></a></li>
-        <li className="d-inline"><a className="nav-link" href="#"><img src="https://img.icons8.com/ios-glyphs/30/000000/user.png"/></a></li>
-        <li className="d-inline"><a className="nav-link" href="#"><img src="https://img.icons8.com/ios-glyphs/30/000000/user.png"/></a></li>
-      </ul>
+    <div className="col-sm-12 mt-1">
+        <i style={this.likeStyle} onClick={this.toggleLike} className={this.likeClass}></i>
+        <i style={this.rtStyle} onClick={this.toggleRetweet} className={this.rtClass}></i>
+        <i onClick={this.props.replyWindowOpen} className="fas fa-reply iconStyling"></i>
     </div>
 
     )
