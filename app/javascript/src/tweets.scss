@@ -1,3 +1,20 @@
+.like-section {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.like {
+  float: left;
+}
+
+.like a {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+}
+
 #top-navbar {
   background-color: #03A9F4;
   margin-bottom: 50px;

@@ -1,33 +1,96 @@
 import React from "react"
 import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
 
-class User extends React.Component {
+import './user.scss';
 
-
-
-
-}
-
-class Userbar extends React.Component{
+class User extends React.Component{
 
   render(){
     return(
-      <nav id="top-navbar" className="navbar navbar-static-top navbar-expand-sm">
-        <a className="navbar-brand" href="#"><img src="https://img.icons8.com/color/48/000000/twitter-squared.png"/></a>
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#userLinks" aria-controls="userLinks" aria-expanded="false" aria-label="Toggle navigation">
-        <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="userLinks">
-          <form className="form-inline my-2 my-lg-0">
-            <input className="form-control mr-sm-2" type="search" placeholder="Search" />
-            <button className="btn btn-light" type="submit">Go</button>
-          </form>
-          <ul className="navbar-nav ml-auto">
-            <li className="nav-item active"><a className="nav-link" href="/user"><img src="https://img.icons8.com/ios-glyphs/30/000000/user.png"/></a></li>
-            <li className="nav-item active"><a className="nav-link" href="/"><img src="https://img.icons8.com/android/24/000000/logout-rounded.png"/></a></li>
-          </ul>
+    <React.Fragment>
+    <nav className="top-nav">
+      <ul className="nav">
+        <li className="nav-item"><a className="nav-link" href="#">Home</a></li>
+        <li className="nav-item"><a className="nav-link" href="#">Notifications</a></li>
+        <li className="nav-item"><a className="nav-link" href="#">Log Out</a></li>
+      </ul>
+      </nav>
+      <header>
+      <section className="profile">
+        <div className="profile-header">
+          <img className="img-circle profile-image" src="https://randomuser.me/api/portraits/women/10.jpg" alt="user" />
         </div>
-       </nav>
+        <div className="profile-form">
+          <form action="#" className="text-right">
+            <button className="btn btn-sm btn-edit">Edit profile</button>
+          </form>
+        </div>
+      </section>
+      </header>
+      <div className="container">
+      <aside className="profile-details">
+        <h3>
+          User Name
+          <small className="text-muted">@username</small>
+        </h3>
+        <p>Regular twitter user | ¯\_(ツ)_/¯</p>
+        <ul className="profile-items">
+          <li className="profile-entry"><a href="#">World</a></li>
+          <li className="profile-entry"><a href="#">altcademy.com</a></li>
+          <li className="text-muted profile-entry">Joined 2020</li>
+        </ul>
+      </aside>
+      <main className="timeline">
+        <div className="media">
+          <img className="media-image img-circle" src="https://randomuser.me/api/portraits/men/18.jpg" alt="Random user" />
+          <div className="media-body">
+            <h4 className="tweet-user">Bill Gates <span className="text-muted">@bill</span></h4>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          </div>
+        </div>
+        <div className="media">
+          <img className="media-image img-circle" src="https://randomuser.me/api/portraits/men/22.jpg" alt="Random user" />
+          <div className="media-body">
+            <h4 className="tweet-user">Little Idea <span className="text-muted">@littleidea</span></h4>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          </div>
+        </div>
+      </main>
+      <aside className="who-to-follow">
+      <div className="media">
+      <h4 className="follow-title">Who to follow</h4>
+      </div>
+        <div className="media">
+          <img className="media-image img-circle" src="https://randomuser.me/api/portraits/men/25.jpg" alt="Random user" />
+          <div className="media-body">
+            <p>James
+              <small className="text-muted">@james</small>
+            </p>
+            <button className="btn btn-sm">Follow</button>
+          </div>
+        </div>
+        <div className="media">
+          <img className="media-image img-circle" src="https://randomuser.me/api/portraits/men/11.jpg" alt="Random user" />
+          <div className="media-body">
+            <p>Messi
+              <small className="text-muted">@messi</small>
+            </p>
+            <button className="btn btn-sm">Follow</button>
+          </div>
+        </div>
+        <div className="media">
+          <img className="media-image img-circle" src="https://randomuser.me/api/portraits/men/31.jpg" alt="Random user" />
+          <div className="media-body">
+            <p>Ronaldo
+              <small className="text-muted">@ronaldo</small>
+            </p>
+            <button className="btn btn-sm">Follow</button>
+          </div>
+        </div>
+      </aside>
+      </div>
+    </React.Fragment>
     )
   }
 }

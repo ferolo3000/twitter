@@ -1,5 +1,6 @@
 import React from "react"
 import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
 
 import './tweets.scss';
 
@@ -327,63 +328,29 @@ class PostContent extends React.Component{
 
 class PostInput extends React.Component{
 
-  constructor(props){
-    super(props)
-
-    this.state = {
-      liked: false,
-      retweeted: false
-    }
-
-    this.toggleLike = this.toggleLike.bind(this)
-    this.toggleRetweet = this.toggleRetweet.bind(this)
-    let likeStyle = {}
-    let rtStyle = {}
-    this.likeClass = 'far fa-heart mr-4 iconStyling'
-    this.rtClass = 'fas fa-retweet mr-4 iconStyling'
-  }
-
   toggleLike(){
-
-    if(this.state.liked){
-      this.likeClass = this.likeClass.replace('fas', 'far')
-      this.likeStyle = {}
-      this.setState({
-        liked: false
-      })
-    } else {
-      this.likeClass = this.likeClass.replace('far', 'fas')
-      this.likeStyle = {color: 'red'}
-      this.setState({
-        liked: true
-      })
-    }
+    var unlike = "https://img.icons8.com/metro/26/000000/like.png";
+    var like = "https://img.icons8.com/material-rounded/24/000000/like.png"
+    var userLike = document.getElementById("liked");
+    userLike.src = (userLike.src === like)? unlike : like;
   }
 
   toggleRetweet(){
-    if(this.state.retweeted){
-      this.rtStyle = {}
-      this.setState({
-        retweeted: false
-      })
-    } else {
-      this.rtStyle = {color: 'green'}
-      this.setState({
-        retweeted: true
-      })
-    }
+    var unret = "https://img.icons8.com/material-sharp/24/000000/data-in-both-directions.png";
+    var retweet = "https://img.icons8.com/officexs/24/000000/data-in-both-directions.png"
+    var userRetweet = document.getElementById("retweet");
+    userRetweet.src = (userRetweet.src === retweet)? unret : retweet;
   }
 
   render(){
     return(
-    <div className="col-sm-12 mt-1 d-flex justify-content-around">
-      <ul>
-        <li className="d-inline"><a className="nav-link" href="#"><img src="https://img.icons8.com/ios-glyphs/30/000000/user.png"/></a></li>
-        <li className="d-inline"><a className="nav-link" href="#"><img src="https://img.icons8.com/ios-glyphs/30/000000/user.png"/></a></li>
-        <li className="d-inline"><a className="nav-link" href="#"><img src="https://img.icons8.com/ios-glyphs/30/000000/user.png"/></a></li>
+    <div className="col-sm-12 mt-1 d-flex">
+      <ul className="like-section">
+        <li className="d-inline like"><a className="nav-link" href="#"><img id="liked" src="https://img.icons8.com/material-outlined/24/000000/like.png" onClick ={this.toggleLike} alt="like"/></a></li>
+        <li className="d-inline like"><a className="nav-link" href="#"><img id="comment" src="https://img.icons8.com/metro/26/000000/forward-arrow.png" onClick={this.props.replyWindowOpen} alt="reply"/></a></li>
+        <li className="d-inline like"><a className="nav-link" href="#"><img id="retweet" src="https://img.icons8.com/material-sharp/24/000000/data-in-both-directions.png" onClick ={this.toggleRetweet} alt="retweet"/></a></li>
       </ul>
     </div>
-
     )
   }
 }
@@ -471,9 +438,10 @@ class ReplyField extends React.Component{
          <div className="input-group-prepend">
           <div className="input-group-text">@{this.props.replyName}</div>
         </div>
-         <input type="text" onChange={this.updateReplyText} id={this.id} className="form-control"  placeholder="Say something nice!"/>
+         <input type="text" onChange={this.updateReplyText} id={this.id} className="form-control"  placeholder="Your reply here!"/>
         </div>
       <button className="btn btn-warning" onClick={this.submitReply}><span>Reply</span></button>
+      <img src="https://img.icons8.com/material-rounded/24/000000/delete-forever.png"/>
     </div>
       )
   }
