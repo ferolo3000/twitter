@@ -5,6 +5,29 @@ import PropTypes from 'prop-types'
 import './user.scss';
 
 class User extends React.Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+      id:  '',
+      title: '',
+      body: '',
+      data: []
+    }
+
+  };
+
+  componentDidMount() {
+    axios.get('/users/:username/tweets')
+    .then(res => {
+      let newData = res.data.slice(0,5);
+      this.setState({
+        id: newData[newData.length - 1].id + 1,
+        data: newData
+      }, () => console.log(this.state.id))
+      console.log(newData)
+    })
+    .catch(err => console.log("Couldn't fetch data. Error: " + err))
+  }
 
   render(){
     return(
