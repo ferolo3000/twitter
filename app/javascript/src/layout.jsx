@@ -1,6 +1,8 @@
 // layout.js
 import React from 'react';
 
+import "./layout.scss";
+
 const Layout = (props) => {
   return (
     <React.Fragment>
@@ -15,9 +17,9 @@ const Layout = (props) => {
         </div>
       </nav>
       {props.children}
-      <footer className="p-3 bg-light">
-        <div>
-          <p className="mr-3 mb-0 text-secondary">Twitter Clone</p>
+      <footer className="p-3 bg-light footer">
+        <div className="container">
+          <p className="mr-3 mb-0 text-secondary copyright">Twitter Clone</p>
         </div>
       </footer>
     </React.Fragment>

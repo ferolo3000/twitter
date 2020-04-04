@@ -23,7 +23,7 @@ class SignupWidget extends React.Component {
       error: '',
     });
 
-    fetch('/api/users', safeCredentials({
+    fetch('/api/users/create', safeCredentials({
       method: 'POST',
       body: JSON.stringify({
         user: {
@@ -65,7 +65,7 @@ class SignupWidget extends React.Component {
       .then(data => {
         if (data.success) {
           const params = new URLSearchParams(window.location.search);
-          const redirect_url = params.get('redirect_url') || '/';
+          const redirect_url = params.get('redirect_url') || '/tweets';
           window.location = redirect_url;
         }
       })
@@ -86,7 +86,7 @@ class SignupWidget extends React.Component {
           <input name="username" type="text" className="form-control form-control-lg mb-3" placeholder="Username" value={username} onChange={this.handleChange} required />
           <input name="email" type="text" className="form-control form-control-lg mb-3" placeholder="Email" value={email} onChange={this.handleChange} required />
           <input name="password" type="password" className="form-control form-control-lg mb-3" placeholder="Password" value={password} onChange={this.handleChange} required />
-          <button type="submit" className="btn btn-danger btn-block btn-lg">Sign up</button>
+          <button type="submit" className="btn btn-primary btn-block btn-lg">Sign up</button>
         </form>
         <hr/>
         <p className="mb-0">Already have an account? <a className="text-primary" onClick={this.props.toggle}>Log in</a></p>

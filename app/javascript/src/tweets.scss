@@ -1,50 +1,29 @@
-.like-section {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
+// container
+body {
+  background-color: #1c9cea;
+  background-image: url("https://www.transparenttextures.com/patterns/diagmonds-light.png");
+  //min-height: calc(100vh - 51px);
+}
+.tweet-container {
+  margin-top: 30px;
 }
 
-.like {
-  float: left;
+.wrapper {
+  height:150px;;
 }
 
-.like a {
-  display: block;
-  text-align: center;
-  text-decoration: none;
-}
-
-#top-navbar {
-  background-color: #03A9F4;
-  margin-bottom: 50px;
-}
-
-.profileThumb{
-  min-width: 50px;
-}
-
-.iconStyling{
-  font-size: 1.25rem;
-  cursor: pointer;
-}
-
-.replyDisplay{
-  background-color: rgb(250,250,250);
-}
-
-.btn{
-  span{
-  font-weight: bold;
-    color: white;
-  }
+.row {
+  margin-left: 0px;
+  margin-right: 0px;
 }
 
 /* User data */
 .profileCard {
   background: #fff;
-  padding: 10px 0;
+  padding: 10px;
   border-radius: 5px;
+  width: 70%;
+  margin: 0 auto;
 }
 
 .user-field .username {
@@ -80,12 +59,18 @@
   color: #0084B4;
 }
 
+.stats {
+  float:left;
+  margin:10px
+}
+
 /* trends section */
 .trends {
   background: #fff;
-  padding: 10px 0;
+  padding: 10px;
   border-radius: 5px;
-  margin-top: 10px;
+  width: 70%;
+  margin: 0 auto;
 }
 
 .trends-header {
@@ -100,5 +85,31 @@
 
 .trends-list {
   list-style: none;
-  padding-left: 0;
+  padding-left: 5px;;
+}
+
+//post-btn
+
+.post-btn {
+  margin-top: 5px;
+}
+
+.form-content {
+  background-color: #94C2DE;
+  padding: 20px;
+  padding-bottom: 57px;
+}
+
+//tweets form-content
+
+#post {
+  margin-top: 10px;
+}
+
+.tweets-list {
+  list-style: none;
+}
+
+.tweet-content {
+  background-color: #94C2DE;
 }
