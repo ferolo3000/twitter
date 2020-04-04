@@ -20,7 +20,7 @@ class Tweets extends React.Component {
 
 //get tweets
   getTweets() {
-    axios.get('/tweets')
+    axios.get('/api/tweets')
     .then(response => {
       this.setState({tweets: response.data.tweets})
     })
@@ -33,7 +33,7 @@ class Tweets extends React.Component {
 
 //create tweets
   createTweets = (e) => {
-      axios.post('/tweets', {tweets: {message: e.target.value}})
+      axios.post('/api/tweets', {tweets: {message: e.target.value}})
       .then(response => {
         const tweets = update(this.state.tweets, {
           $splice: [[0, 0, response.data]]
@@ -48,7 +48,7 @@ class Tweets extends React.Component {
 
   //delete tweets
   deleteTweet = (id) => {
-    axios.delete(`/tweets/:${id}`)
+    axios.delete(`/api/tweets/:${id}`)
     .then(response => {
       const tweetIndex = this.state.tweets.findIndex(x => x.id === id)
       const tweets = update(this.state.tweets, {
@@ -62,6 +62,7 @@ class Tweets extends React.Component {
   }
 
   render () {
+    console.log(this.state.tweets);
     return (
         <Layout>
           <div className="mb-2 fixedMenuFix">
