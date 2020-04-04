@@ -1,53 +1,95 @@
 // tweets.jsx
 import React from 'react';
 import ReactDOM from 'react-dom';
+import axios from "axios";
 import Layout from '@src/layout';
-import { safeCredentials, handleErrors } from '@utils/fetchHelper';
+import update from 'immutability-helper'
 
 class Tweets extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      message: '',
-      user: '',
-      error: '',
+      tweets: [],
+      inputValue: ''
     }
-    this.updateMessage = this.updateMessage.bind(this)
-    this.submitMessage = this.submitMessage.bind(this)
   }
 
-  updateMessage(e){
-    this.setState({
-      message: e.target.value
+  handleChange = (e) => {
+    this.setState({inputValue: e.target.value});
+  }
+
+//get tweets
+  getTweets() {
+    axios.get('/tweets')
+    .then(response => {
+      this.setState({tweets: response.data.tweets})
     })
+    .catch(error => console.log(error))
   }
 
-  submitMessage(){
-    if(this.state.message.length > 0 && this.state.message.length <= 140){
-      this.props.post(this.state.message)
-      document.getElementById('postField').value = ''
+  componentDidMount() {
+    this.getTweets()
+  }
 
-      this.setState({
-        message: ''
+//create tweets
+  createTweets = (e) => {
+      axios.post('/tweets', {tweets: {message: e.target.value}})
+      .then(response => {
+        const tweets = update(this.state.tweets, {
+          $splice: [[0, 0, response.data]]
+        })
+        this.setState({
+          tweets: tweets,
+          inputValue: ''
+        })
       })
-    } else {
-      alert("Please check length")
-    }
+      .catch(error => console.log(error))
   }
 
+  //delete tweets
+  deleteTweet = (id) => {
+    axios.delete(`/tweets/:${id}`)
+    .then(response => {
+      const tweetIndex = this.state.tweets.findIndex(x => x.id === id)
+      const tweets = update(this.state.tweets, {
+        $splice: [[tweetIndex, 1]]
+      })
+      this.setState({
+        tweets: tweets
+      })
+    })
+    .catch(error => console.log(error))
+  }
 
   render () {
     return (
-      <React.Fragment>
-      <Layout>
-      <div className="mb-2 fixedMenuFix">
-        <input id="postField" onChange={this.updateMessage} type="text" className="form-control"  placeholder="What's up?"/>
-        <button onClick={this.submitMessage} className="btn btn-sm btn-primary"><span>Post</span></button>
-      </div>
-      <div id="post">
-      </div>
-      </Layout>
-      </React.Fragment>
+        <Layout>
+          <div className="mb-2 fixedMenuFix">
+            <form onSubmit={this.createTweets}>
+              <input id="postField"
+                onChange={this.handleChange}
+                value={this.state.inputValue}
+                type="text"
+                className="form-control"
+                placeholder="What's up?"
+                maxLength="140" />
+              <button className="btn btn-sm btn-primary"><span>Post</span></button>
+            </form>
+          </div>
+          <div id="post">
+            <ul className="tweets-list">
+              {this.state.tweets.map((tweet) => {
+                return(
+                  <li className="tweet-content" key={tweet.id}>
+                    <label className="tweet-label">{tweet.message}</label>
+                    <label className="tweet-label">{tweet.user}</label>
+                    <span className="delete-tweet" onClick={(e) => this.deleteTweet(tweet.id)}>Delete</span>
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
+        </Layout>
     )
   }
 }

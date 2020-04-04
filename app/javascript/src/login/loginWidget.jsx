@@ -4,10 +4,13 @@ import ReactDOM from 'react-dom';
 import { safeCredentials, handleErrors } from '@utils/fetchHelper';
 
 class LoginWidget extends React.Component {
-  state = {
-    username: '',
-    password: '',
-    error: '',
+  constructor(props) {
+    super(props)
+    this.state = {
+      username: '',
+      password: '',
+      error: '',
+    }
   }
 
   handleChange = (e) => {
@@ -53,8 +56,21 @@ class LoginWidget extends React.Component {
       <img src="https://img.icons8.com/color/48/000000/twitter.png" style={{marginLeft: '50%'}}/>
       <h3 style={{textAlign: "center",}}>Welcome to Twitter</h3>
         <form onSubmit={this.login}>
-          <input name="username" type="text" className="form-control form-control-lg mb-3" placeholder="Username" value={username} onChange={this.handleChange} required />
-          <input name="password" type="password" className="form-control form-control-lg mb-3" placeholder="Password" value={password} onChange={this.handleChange} required />
+          <input name="username"
+            type="text"
+            className="form-control form-control-lg mb-3"
+            placeholder="Username"
+            value={this.state.username}
+            onChange={this.handleChange}
+            required />
+          <input
+            name="password" 
+            type="password"
+            className="form-control form-control-lg mb-3"
+            placeholder="Password"
+            value={this.state.password}
+            onChange={this.handleChange}
+            required />
           <button type="submit" className="btn btn-primary btn-block btn-lg">Log in</button>
           {error && <p className="text-danger mt-2">{error}</p>}
         </form>
