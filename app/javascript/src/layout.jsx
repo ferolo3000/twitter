@@ -11,7 +11,13 @@ const Layout = (props) => {
         <div className="collapse navbar-collapse">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <a className="nav-link" href="/">Home</a>
+              <a className="nav-link" href="/tweets">Home</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="/users">User</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="/">Log Out</a>
             </li>
           </ul>
         </div>

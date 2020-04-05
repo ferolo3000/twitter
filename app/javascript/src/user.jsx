@@ -9,25 +9,27 @@ class User extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      id:  '',
-      title: '',
-      body: '',
-      data: []
+      userTweets: [],
+      username: "bobby"
     }
 
   };
 
+//how to get username
+
+
+  //get users tweets
+  getTweets() {
+    axios.get(`/api/users/:${this.state.username}/tweets`)
+    //axios.get(`/api/users/:bobby/tweets`)
+      .then(response => {
+        this.setState({ userTweets: response.data.tweets })
+      })
+      .catch(error => console.log(error))
+  }
+
   componentDidMount() {
-    axios.get('/api/users/:username/tweets')
-    .then(res => {
-      let newData = res.data.slice(0,5);
-      this.setState({
-        id: newData[newData.length - 1].id + 1,
-        data: newData
-      }, () => console.log(this.state.id))
-      console.log(newData)
-    })
-    .catch(err => console.log("Couldn't fetch data. Error: " + err))
+    this.getTweets()
   }
 
   render(){
@@ -35,15 +37,15 @@ class User extends React.Component{
     <React.Fragment>
     <nav className="top-nav">
       <ul className="nav">
-        <li className="nav-item"><a className="nav-link" href="#">Home</a></li>
-        <li className="nav-item"><a className="nav-link" href="#">Notifications</a></li>
-        <li className="nav-item"><a className="nav-link" href="#">Log Out</a></li>
+        <li className="nav-item"><a className="nav-link" href="#">Twitter</a></li>
+        <li className="nav-item"><a className="nav-link" href="/tweets">Home</a></li>
+        <li className="nav-item"><a className="nav-link" href="/">Log Out</a></li>
       </ul>
       </nav>
       <header>
       <section className="profile">
         <div className="profile-header">
-          <img className="img-circle profile-image" src="https://randomuser.me/api/portraits/women/10.jpg" alt="user" />
+          <img className="img-circle profile-image" src="https://img.icons8.com/ultraviolet/80/000000/user.png" alt="user" />
         </div>
         <div className="profile-form">
           <form action="#" className="text-right">
@@ -54,10 +56,14 @@ class User extends React.Component{
       </header>
       <div className="container">
       <aside className="profile-details">
+      {this.state.userTweets.map((data) => {
+        return (
         <h3>
-          User Name
-          <small className="text-muted">@username</small>
-        </h3>
+          {data.username}
+          <small className="text-muted">@{data.username}</small>
+          </h3>
+        )
+        })}
         <ul className="profile-items">
           <li className="profile-entry"><a href="#">World</a></li>
           <li className="profile-entry"><a href="#">altcademy.com</a></li>
@@ -65,18 +71,17 @@ class User extends React.Component{
         </ul>
       </aside>
       <main className="timeline">
-        <div className="media">
-          <img className="media-image img-circle" src="https://randomuser.me/api/portraits/men/25.jpg" alt="Random user" />
+        <div className="media-user">
+          <img className="media-image img-circle" src="https://img.icons8.com/ultraviolet/40/000000/user.png" alt="Random user" />
           <div className="media-body">
-            <h4 className="tweet-user">Bill Gates <span className="text-muted">@bill</span></h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-          </div>
-        </div>
-        <div className="media">
-          <img className="media-image img-circle" src="https://randomuser.me/api/portraits/men/23.jpg" alt="Random user" />
-          <div className="media-body">
-            <h4 className="tweet-user">Little Idea <span className="text-muted">@littleidea</span></h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          {this.state.userTweets.map((tweet) => {
+            return (
+              <div key={tweet.id}>
+                <h4 className="tweet-user"><small className="text-muted">{tweet.username}</small></h4>
+                <p>{tweet.message}</p>
+              </div>
+            )
+            })}
           </div>
         </div>
       </main>
@@ -85,7 +90,7 @@ class User extends React.Component{
       <h4 className="follow-title">Who to follow</h4>
       </div>
         <div className="media">
-          <img className="media-image img-circle" src="https://randomuser.me/api/portraits/men/35.jpg" alt="Random user" />
+          <img className="media-image img-circle" src="https://img.icons8.com/ultraviolet/40/000000/user.png" alt="Random user" />
           <div className="media-body">
             <p>James
               <small className="text-muted">@james</small>
@@ -94,7 +99,7 @@ class User extends React.Component{
           </div>
         </div>
         <div className="media">
-          <img className="media-image img-circle" src="https://randomuser.me/api/portraits/men/2.jpg" alt="Random user" />
+          <img className="media-image img-circle" src="https://img.icons8.com/ultraviolet/40/000000/user.png" alt="Random user" />
           <div className="media-body">
             <p>Messi
               <small className="text-muted">@messi</small>
@@ -103,7 +108,7 @@ class User extends React.Component{
           </div>
         </div>
         <div className="media">
-          <img className="media-image img-circle" src="https://randomuser.me/api/portraits/men/31.jpg" alt="Random user" />
+          <img className="media-image img-circle" src="https://img.icons8.com/ultraviolet/40/000000/user.png" alt="Random user" />
           <div className="media-body">
             <p>Ronaldo
               <small className="text-muted">@ronaldo</small>

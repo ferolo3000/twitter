@@ -23,7 +23,7 @@ class SignupWidget extends React.Component {
       error: '',
     });
 
-    fetch('/api/users/create', safeCredentials({
+    fetch('/api/users', safeCredentials({
       method: 'POST',
       body: JSON.stringify({
         user: {
@@ -80,7 +80,7 @@ class SignupWidget extends React.Component {
     const { email, password, username, error } = this.state;
     return (
       <React.Fragment>
-      <img src="https://img.icons8.com/color/48/000000/twitter.png" style={{marginLeft: '50%'}}/>
+      <img src="https://img.icons8.com/color/48/000000/twitter.png" style={{marginLeft: '45%'}}/>
       <h3 style={{textAlign: "center",}}>Welcome to Twitter</h3>
         <form onSubmit={this.signup}>
           <input name="username" type="text" className="form-control form-control-lg mb-3" placeholder="Username" value={username} onChange={this.handleChange} required />

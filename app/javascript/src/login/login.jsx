@@ -28,6 +28,8 @@ class Login extends React.Component {
     })
   }
 
+
+
   render () {
     const { authenticated, show_login } = this.state;
     if (authenticated) {
@@ -36,7 +38,7 @@ class Login extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-12 col-md-9 col-lg-6 mx-auto my-4">
-                <div className="border p-4">
+                <div className="border p-4 login-card">
                   <p className="mb-0">You are already logged in 🙂</p>
                 </div>
               </div>
@@ -51,7 +53,7 @@ class Login extends React.Component {
         <div className="container">
           <div className="row">
             <div className="col-12 col-md-9 col-lg-6 mx-auto my-4">
-              <div className="border p-4">
+              <div className="border p-4 login-card">
                 {show_login ? <LoginWidget toggle={this.toggle} /> : <SignupWidget toggle={this.toggle} />}
               </div>
             </div>

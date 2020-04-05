@@ -11,16 +11,16 @@
 }
 
 body, html {
-  background-color: var(--main-bg);
+  background-color: #1c9cea;
+  background-image: url("https://www.transparenttextures.com/patterns/diagmonds-light.png");
   height: 100%;
   width: 100%;
   margin: 0;
   padding: 0;
-  font-family: Arial, Ubuntu, sans-serif;
 }
 
 header {
-  background-image: url("https://loremflickr.com/1200/300");
+  background-image: url("https://i.pinimg.com/originals/4c/46/55/4c4655a66f171aad649fe23097894d3e.jpg");
   background-size: cover;
   min-height: 300px;
   padding-top: 275px;
@@ -67,6 +67,7 @@ a {
   position: absolute;
   top: 240px;
   margin-left: 50px;
+  background-color: #fff;
 }
 
 .profile-form {
@@ -114,6 +115,15 @@ ul {
   border-bottom: 1px var(--separator-color);
   padding: .5em;
   overflow: auto;
+}
+
+.media-user {
+  border-width: 100%;
+  background: var(--light-bg);
+  border-bottom: 1px var(--separator-color);
+  padding: .5em;
+  overflow: auto;
+  border-radius: 10px;
 }
 
 .media-image {

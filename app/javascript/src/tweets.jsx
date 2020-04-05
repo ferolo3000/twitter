@@ -33,6 +33,9 @@ class Tweets extends React.Component {
     this.getTweets()
   }
 
+//how to get username
+
+
   //create tweets
   createTweets = (e) => {
     axios.post('/api/tweets', { tweets: { message: e.target.value } })
@@ -71,7 +74,7 @@ class Tweets extends React.Component {
           <div className="col-4 profile-trends">
             <div className="profileCard col-xs-12 wrapper">
               <div className="user-field col-xs-12">
-                <a className="username">User</a><br />
+                <a className="username">User name</a><br />
                 <a className="screenName">@User</a>
               </div>
               <div className="user-stats">
@@ -116,7 +119,7 @@ class Tweets extends React.Component {
                   return (
                     <li className="tweet-content" key={tweet.id}>
                       <label className="tweet-label">{tweet.message}</label>
-                      <label className="tweet-label">{tweet.user}</label><br/ >
+                      <label className="tweet-label">{tweet.username}</label><br/ >
                       <span className="delete-tweet" onClick={(e) => this.deleteTweet(tweet.id)}>Delete</span>
                     </li>
                   )

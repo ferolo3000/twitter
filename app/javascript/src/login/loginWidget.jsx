@@ -38,7 +38,7 @@ class LoginWidget extends React.Component {
       .then(data => {
         if (data.success) {
           const params = new URLSearchParams(window.location.search);
-          const redirect_url = params.get('redirect_url') || '/';
+          const redirect_url = params.get('redirect_url') || '/tweets';
           window.location = redirect_url;
         }
       })
@@ -53,7 +53,7 @@ class LoginWidget extends React.Component {
     const { email, password, error } = this.state;
     return (
       <React.Fragment>
-      <img src="https://img.icons8.com/color/48/000000/twitter.png" style={{marginLeft: '50%'}}/>
+      <img src="https://img.icons8.com/color/48/000000/twitter.png" style={{marginLeft: '45%'}}/>
       <h3 style={{textAlign: "center",}}>Welcome to Twitter</h3>
         <form onSubmit={this.login}>
           <input name="username"
@@ -64,7 +64,7 @@ class LoginWidget extends React.Component {
             onChange={this.handleChange}
             required />
           <input
-            name="password" 
+            name="password"
             type="password"
             className="form-control form-control-lg mb-3"
             placeholder="Password"
