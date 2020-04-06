@@ -106,10 +106,22 @@ body {
   margin-top: 10px;
 }
 
-.tweets-list {
-  list-style: none;
+.tweet-card {
+  background-color: #fff;
+  border-radius: 10px;
+  margin-bottom: 5px;
+
 }
 
-.tweet-content {
-  background-color: #94C2DE;
+.tweet-username {
+  color: #66757f;
+  margin-left: 10px;
+}
+
+.tweet-msg {
+  margin-left: 10px;
+}
+
+.delete-tweet {
+  
 }

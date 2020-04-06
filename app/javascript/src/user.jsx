@@ -1,7 +1,7 @@
 import React from "react"
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import axios from "axios"
+import { safeCredentials, handleErrors } from '@utils/fetchHelper';
 
 import './user.scss';
 
@@ -10,29 +10,41 @@ class User extends React.Component{
     super(props);
     this.state = {
       userTweets: [],
-      username: "bobby"
     }
 
   };
 
-//how to get username
-
-
   //get users tweets
-  getTweets() {
-    axios.get(`/api/users/:${this.state.username}/tweets`)
-    //axios.get(`/api/users/:bobby/tweets`)
-      .then(response => {
-        this.setState({ userTweets: response.data.tweets })
-      })
-      .catch(error => console.log(error))
-  }
+  // componentDidMount() {
+  //   fetch('/api/tweets')
+  //     .then(response => response.json())
+  //     .then(data => this.setState({ userTweets: data.tweets }));
+  // }
+
+  // state = {
+  //   userTweets: [],
+  //   loading: true,
+  // }
 
   componentDidMount() {
-    this.getTweets()
+    fetch(`/api/users/${this.props.username}/tweets`)
+      .then(handleErrors)
+      .then(response => response.json())
+      .then(data => this.setState({ userTweets: data.tweets }));
   }
 
   render(){
+    // const { tweets, loading } = this.state;
+    // if (loading) {
+    //   return <p>loading...</p>;
+    // };
+    //
+    // const {
+    //   id,
+    //   username,
+    //   message
+    //   } = tweets
+
     return(
     <React.Fragment>
     <nav className="top-nav">
@@ -56,12 +68,9 @@ class User extends React.Component{
       </header>
       <div className="container">
       <aside className="profile-details">
-      {this.state.userTweets.map((data) => {
+      {this.state.userTweets.map((data, index) => {
         return (
-        <h3>
-          {data.username}
           <small className="text-muted">@{data.username}</small>
-          </h3>
         )
         })}
         <ul className="profile-items">
@@ -71,19 +80,19 @@ class User extends React.Component{
         </ul>
       </aside>
       <main className="timeline">
-        <div className="media-user">
-          <img className="media-image img-circle" src="https://img.icons8.com/ultraviolet/40/000000/user.png" alt="Random user" />
-          <div className="media-body">
-          {this.state.userTweets.map((tweet) => {
-            return (
-              <div key={tweet.id}>
+      {this.state.userTweets.map((tweet) => {
+        return (
+          <div key={tweet.id}>
+            <div className="media-user">
+              <img className="media-image img-circle" src="https://img.icons8.com/ultraviolet/40/000000/user.png" alt="Random user" />
+              <div className="media-body">
                 <h4 className="tweet-user"><small className="text-muted">{tweet.username}</small></h4>
                 <p>{tweet.message}</p>
               </div>
-            )
-            })}
+            </div>
           </div>
-        </div>
+          )
+        })}
       </main>
       <aside className="who-to-follow">
       <div className="media">

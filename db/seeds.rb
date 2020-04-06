@@ -15,14 +15,14 @@ users = User.create([
 tweets = Tweet.create([
   {
     message: "Life is good",
-    user: 'bobby'
+    user: User.first
   },
   {
     message: "Life is life",
-    user: 'bobby'
+    user: User.first
   },
   {
     message: "Hello there",
-    user: 'bobby'
+    user: User.first
   },
   ])
