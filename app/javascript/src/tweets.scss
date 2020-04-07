@@ -119,9 +119,13 @@ body {
 }
 
 .tweet-msg {
-  margin-left: 10px;
+  padding: 10px;
 }
 
-.delete-tweet {
-  
+/* icons like & retweet */
+.like-section {
+  padding-left: 0px;
+}
+.like {
+  margin-right: 5px;
 }

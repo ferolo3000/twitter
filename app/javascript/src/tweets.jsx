@@ -60,6 +60,20 @@ class Tweets extends React.Component {
       .catch(error => console.log(error))
   }
 
+  toggleLike(){
+    var unlike = "https://img.icons8.com/metro/24/000000/like.png";
+    var like = "https://img.icons8.com/material-rounded/24/000000/like.png"
+    var userLike = document.getElementById("liked");
+    userLike.src = (userLike.src === like)? unlike : like;
+  }
+
+  toggleRetweet(){
+    var unret = "https://img.icons8.com/ios-glyphs/24/000000/compare.png";
+    var retweet = "https://img.icons8.com/material/24/000000/compare--v1.png";
+    var userRetweet = document.getElementById("retweet");
+    userRetweet.src = (userRetweet.src === retweet)? unret : retweet;
+  }
+
   render() {
     console.log(this.state.tweets);
     return (
@@ -68,8 +82,7 @@ class Tweets extends React.Component {
           <div className="col-4 profile-trends">
             <div className="profileCard col-xs-12 wrapper">
               <div className="user-field col-xs-12">
-                <a className="username">User name</a><br />
-                <a className="screenName">@User</a>
+                <img className="img-circle profile-image" src="https://img.icons8.com/ultraviolet/40/000000/user.png" alt="user" /><br />
               </div>
               <div className="user-stats">
                 <div className="col-xs-3 stats">
@@ -100,7 +113,7 @@ class Tweets extends React.Component {
                   onChange={this.handleChange}
                   value={this.state.message}
                   type="text"
-                  rows={3}
+                  rows={'3'}
                   className="form-control"
                   placeholder="What's up?"
                   maxLength="140" />
@@ -115,6 +128,12 @@ class Tweets extends React.Component {
                         <small className="tweet-username">@{tweet.username}</small>
                         <button className="delete-tweet btn btn-sm float-right" onClick={(e) => this.deleteTweet(tweet.id)}><img src="https://img.icons8.com/small/16/000000/trash--v1.png"/></button><br />
                         <label className="tweet-msg">{tweet.message}</label>
+                        <div className="col-sm-12 mt-1 d-flex">
+                          <ul className="like-section">
+                            <li className="d-inline like"><a><img id="liked" src="https://img.icons8.com/material-outlined/24/000000/like.png" onClick ={this.toggleLike} alt="like"/></a></li>
+                            <li className="d-inline like"><a><img id="retweet" src="https://img.icons8.com/ios-glyphs/24/000000/compare.png" onClick ={this.toggleRetweet} alt="retweet"/></a></li>
+                          </ul>
+                        </div>
                       </div>
                     </div>
                   )

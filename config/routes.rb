@@ -18,6 +18,6 @@ Rails.application.routes.draw do
     get  '/tweets/search/:keyword' => 'tweets#search'
   end
   get '/tweets' => 'static_pages#tweets'
-  get '/users' => 'static_pages#user'
+  get '/users/:username' => 'static_pages#user'
   get '*path' => 'static_pages#home'
 end

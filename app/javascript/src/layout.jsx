@@ -16,18 +16,10 @@ const Layout = (props) => {
             <li className="nav-item">
               <a className="nav-link" href="/users">User</a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/">Log Out</a>
-            </li>
           </ul>
         </div>
       </nav>
       {props.children}
-      <footer className="p-3 bg-light footer">
-        <div className="container">
-          <p className="mr-3 mb-0 text-secondary copyright">Twitter Clone</p>
-        </div>
-      </footer>
     </React.Fragment>
   );
 }
