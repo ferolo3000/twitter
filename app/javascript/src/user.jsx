@@ -29,10 +29,11 @@ class User extends React.Component{
   }
 
   componentDidMount() {
-    this.getTweets()
+    // this.getTweets()
   }
 
   render(){
+    console.log(this.props.username_id)
     return(
     <React.Fragment>
     <nav className="top-nav">
@@ -126,8 +127,11 @@ class User extends React.Component{
 export default User;
 
 document.addEventListener('DOMContentLoaded', () => {
+  const node = document.getElementById('params')
+  const data = JSON.parse(node.getAttribute('data-params'))
+
   ReactDOM.render(
-    <User />,
+    <User username_id={data.username_id} />,
     document.body.appendChild(document.createElement('div')),
   )
 })
