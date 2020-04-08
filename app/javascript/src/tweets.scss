@@ -17,6 +17,20 @@ body {
   margin-right: 0px;
 }
 
+.log-out {
+  background-color: #F8F9FA;
+  text-decoration: none;
+  border-color: #F8F9FA;
+  color: var(--main-link-color);
+}
+
+.log-out:hover {
+  background-color: #F8F9FA;
+  text-decoration: none;
+  border-color: #F8F9FA;
+  color: var(--link-color);
+}
+
 /* User data */
 .profileCard {
   background: #fff;
@@ -67,6 +81,10 @@ body {
 .stats {
   float:left;
   margin:10px
+}
+
+.user-name {
+  margin-left: 10px;
 }
 
 /* trends section */

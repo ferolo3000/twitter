@@ -30,16 +30,16 @@ class SignupWidget extends React.Component {
       method: 'POST',
       body: JSON.stringify({
         user: {
+          email: this.state.email,
           password: this.state.password,
           username: this.state.username,
         }
       })
     }))
-      .then(handleErrors)
+    .then(handleErrors)
       .then(data => {
         if (data.user) {
           this.login();
-          alert("mmm");
         }
       })
       .catch(error => {
@@ -47,19 +47,19 @@ class SignupWidget extends React.Component {
           error: 'Could not sign up.',
         })
       })
-  }
+    }
+
 
   login = (e) => {
     if (e) { e.preventDefault(); }
     this.setState({
       error: '',
     });
-
     fetch('/api/sessions', safeCredentials({
       method: 'POST',
       body: JSON.stringify({
         user: {
-          username: this.state.username,
+          email: this.state.email,
           password: this.state.password,
         }
       })
@@ -68,7 +68,7 @@ class SignupWidget extends React.Component {
       .then(data => {
         if (data.success) {
           const params = new URLSearchParams(window.location.search);
-          const redirect_url = params.get('redirect_url') || '/tweets';
+          const redirect_url = params.get('redirect_url') || '/';
           window.location = redirect_url;
         }
       })

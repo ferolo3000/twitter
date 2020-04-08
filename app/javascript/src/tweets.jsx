@@ -14,8 +14,12 @@ class Tweets extends React.Component {
     this.state = {
       tweets: [],
       message: '',
-      username: ''
+      username: '',
+      current_user: ''
     }
+    this.createTweets = this.createTweets.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
   handleChange = (e) => {
@@ -26,6 +30,7 @@ class Tweets extends React.Component {
     fetch('/api/tweets')
       .then(response => response.json())
       .then(data => this.setState({ tweets: data.tweets }));
+    this.currentUser();
   }
 
   createTweets = (e) => {
@@ -36,74 +41,80 @@ class Tweets extends React.Component {
       method: 'POST',
       body: JSON.stringify(data),
     }))
-    .then((response) => response.json())
-    .then((data) => {
-      console.log('Success:', data);
-    })
-    .catch((error) => {
-      console.log('Error:', error);
-    });
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        console.log('Error:', error);
+      });
   }
 
-  //delete tweets
-  deleteTweet = (id) => {
-    fetch(`/api/tweets/${id}`, safeCredentials({
+  currentUser = () => {
+    fetch('/api/authenticated')
+      .then(response => response.json())
+      .then(data => this.setState({ current_user: data.username }));
+  }
+
+  toggleLike() {
+    var unlike = "https://img.icons8.com/metro/24/000000/like.png";
+    var like = "https://img.icons8.com/material-rounded/24/000000/like.png"
+    var userLike = document.getElementById("liked");
+    userLike.src = (userLike.src === like) ? unlike : like;
+  }
+
+  toggleRetweet() {
+    var unret = "https://img.icons8.com/ios-glyphs/24/000000/compare.png";
+    var retweet = "https://img.icons8.com/material/24/000000/compare--v1.png";
+    var userRetweet = document.getElementById("retweet");
+    userRetweet.src = (userRetweet.src === retweet) ? unret : retweet;
+  }
+
+  handleLogout() {
+    fetch('/api/sessions', safeCredentials({
       method: 'DELETE',
     }))
       .then(response => {
-        const tweetIndex = this.state.tweets.findIndex(x => x.id === id)
-        const tweets = update(this.state.tweets, {
-          $splice: [[tweetIndex, 1]]
-        })
-        this.setState({
-          tweets: tweets
-        })
+        window.location = "/";
       })
       .catch(error => console.log(error))
   }
 
-  toggleLike(){
-    var unlike = "https://img.icons8.com/metro/24/000000/like.png";
-    var like = "https://img.icons8.com/material-rounded/24/000000/like.png"
-    var userLike = document.getElementById("liked");
-    userLike.src = (userLike.src === like)? unlike : like;
-  }
-
-  toggleRetweet(){
-    var unret = "https://img.icons8.com/ios-glyphs/24/000000/compare.png";
-    var retweet = "https://img.icons8.com/material/24/000000/compare--v1.png";
-    var userRetweet = document.getElementById("retweet");
-    userRetweet.src = (userRetweet.src === retweet)? unret : retweet;
+  countTweets(currentUser) {
+    const countTweets = this.state.tweets.filter(user => user.username === currentUser);
+    return countTweets.length;
   }
 
   render() {
-    console.log(this.state.tweets, this.props.username_id);
+    console.log(this.state.tweets, this.state.current_user);
     return (
       <React.Fragment>
-      <nav className="navbar navbar-expand navbar-light bg-light">
-        <a href="/"><span className="navbar-brand mb-0 h1 text-primary">Twitter</span></a>
-        <div className="collapse navbar-collapse">
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              <a className="nav-link" href="/tweets">Home</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href={`/users/${this.props.username_id}`}>User</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
+        <nav className="navbar navbar-expand navbar-light bg-light">
+          <a href="/"><span className="navbar-brand mb-0 h1 text-primary">Twitter</span></a>
+          <div className="collapse navbar-collapse">
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <a className="nav-link" href="/tweets">Home</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href={`/users/${this.state.current_user}`}>User</a>
+              </li>
+              <button type="button" onClick={this.handleLogout} className="btn btn-light log-out" >Log Out</button>
+            </ul>
+          </div>
+        </nav>
         <div className="row tweet-container">
           <div className="col-4 profile-trends">
             <div className="profileCard col-xs-12 wrapper">
               <div className="user-field col-xs-12">
-                <img className="img-circle profile-tweet" src="https://img.icons8.com/ultraviolet/40/000000/user.png" alt="user" /><br />
+                <img className="img-circle profile-tweet" src="https://img.icons8.com/ultraviolet/40/000000/user.png" alt="user" />
+                <small className="user-name">@{this.state.current_user}</small>
               </div>
               <div className="user-stats">
                 <div className="col-xs-3 stats">
                   <a>
                     <span>Tweets<br /></span>
-                    <span className="user-stats-tweets">10</span>
+                    <span className="user-stats-tweets">{this.countTweets(this.state.current_user)}</span>
                   </a>
                 </div>
                 <div className="col-xs-4 stats">
@@ -136,39 +147,38 @@ class Tweets extends React.Component {
               </form>
             </div>
             <div id="post">
-                {this.state.tweets.map((tweet) => {
-                  return (
-                    <div className="tweet-card" key={tweet.id}>
-                      <div className="tweet-content">
-                        <small className="tweet-username">@{tweet.username}</small>
-                        <button className="delete-tweet btn btn-sm float-right" onClick={(e) => this.deleteTweet(tweet.id)}><img src="https://img.icons8.com/small/16/000000/trash--v1.png"/></button><br />
-                        <label className="tweet-msg">{tweet.message}</label>
-                        <div className="col-sm-12 mt-1 d-flex">
-                          <ul className="like-section">
-                            <li className="d-inline like"><a><img id="liked" src="https://img.icons8.com/material-outlined/24/000000/like.png" onClick ={this.toggleLike} alt="like"/></a></li>
-                            <li className="d-inline like"><a><img id="retweet" src="https://img.icons8.com/ios-glyphs/24/000000/compare.png" onClick ={this.toggleRetweet} alt="retweet"/></a></li>
-                          </ul>
-                        </div>
+              {this.state.tweets.map((tweet) => {
+                return (
+                  <div className="tweet-card" key={tweet.id}>
+                    <div className="tweet-content">
+                      <small className="tweet-username">@{tweet.username}</small><br />
+                      <label className="tweet-msg">{tweet.message}</label>
+                      <div className="col-sm-12 mt-1 d-flex">
+                        <ul className="like-section">
+                          <li className="d-inline like"><a><img id="liked" src="https://img.icons8.com/material-outlined/24/000000/like.png" onClick={this.toggleLike} alt="like" /></a></li>
+                          <li className="d-inline like"><a><img id="retweet" src="https://img.icons8.com/ios-glyphs/24/000000/compare.png" onClick={this.toggleRetweet} alt="retweet" /></a></li>
+                        </ul>
                       </div>
                     </div>
-                  )
-                })}
+                  </div>
+                )
+              })}
             </div>
           </div>
           <div className="col-4">
             <div className="trends">
-            <div className="col-xs-12">
-              <div className="trends-header">
-                <span>Trends</span>
+              <div className="col-xs-12">
+                <div className="trends-header">
+                  <span>Trends</span>
+                </div>
+                <ul className="trends-list">
+                  <li><a href="#">#FullStack</a></li>
+                  <li><a href="#">#Altcademy</a></li>
+                  <li><a href="#">#React</a></li>
+                  <li><a href="#">#rails</a></li>
+                  <li><a href="#">#API</a></li>
+                </ul>
               </div>
-              <ul className="trends-list">
-                <li><a href="#">#FullStack</a></li>
-                <li><a href="#">#Altcademy</a></li>
-                <li><a href="#">#React</a></li>
-                <li><a href="#">#rails</a></li>
-                <li><a href="#">#API</a></li>
-              </ul>
-            </div>
             </div>
           </div>
         </div>
@@ -178,16 +188,6 @@ class Tweets extends React.Component {
 }
 
 export default Tweets
-
-// document.addEventListener('DOMContentLoaded', () => {
-//   const node = document.getElementById('params')
-//   const data = JSON.parse(node.getAttribute('data-params'))
-//
-//   ReactDOM.render(
-//     <Tweets username_id={data.username_id} />,
-//     document.body.appendChild(document.createElement('div')),
-//   )
-// })
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(

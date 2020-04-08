@@ -137,6 +137,7 @@ ul {
   padding: .5em;
   overflow: auto;
   border-radius: 10px;
+  margin-bottom: 5px;
 }
 
 .media-image {
@@ -174,4 +175,14 @@ ul {
 
 .last {
   margin-bottom: 60px;
+}
+
+.btn-follow {
+  background-color: var(--link-color);
+  color: #fff;
+}
+
+.btn-follow:hover {
+  background-color: var(--main-link-color);
+  color: #fff;
 }

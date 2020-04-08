@@ -1,6 +1,7 @@
 import React from "react"
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
+import update from 'immutability-helper'
 import { safeCredentials, handleErrors  } from '@utils/fetchHelper';
 
 import './user.scss';
@@ -20,6 +21,23 @@ class User extends React.Component{
       .then(data => this.setState({ userTweets: data.tweets }));
   }
 
+  //delete tweets
+  deleteTweet = (id) => {
+    fetch(`/api/tweets/${id}`, safeCredentials({
+      method: 'DELETE',
+    }))
+      .then(response => {
+        const tweetIndex = this.state.userTweets.findIndex(x => x.id === id)
+        const tweets = update(this.state.userTweets, {
+          $splice: [[tweetIndex, 1]]
+        })
+        this.setState({
+          userTweets: tweets
+        })
+      })
+      .catch(error => console.log(error))
+  }
+
   handleLogout() {
     fetch('/api/sessions', safeCredentials({
       method: 'DELETE',
@@ -36,7 +54,7 @@ class User extends React.Component{
     <React.Fragment>
     <nav className="top-nav">
       <ul className="nav">
-        <li className="nav-item"><a className="nav-link" href="#">Twitter</a></li>
+        <li className="nav-item"><a className="nav-link" href="/">Twitter</a></li>
         <li className="nav-item"><a className="nav-link" href="/tweets">Home</a></li>
         <button type="button" onClick={this.handleLogout} className="btn btn-light log-out" >Log Out</button>
       </ul>
@@ -69,6 +87,7 @@ class User extends React.Component{
         <div className="media-user" key={tweet.id}>
           <img className="media-image img-circle" src="https://img.icons8.com/ultraviolet/40/000000/user.png" alt="Random user" />
           <div className="media-body">
+          <button className="delete-tweet btn btn-sm float-right" onClick={(e) => this.deleteTweet(tweet.id)}><img src="https://img.icons8.com/small/16/000000/trash--v1.png"/></button><br />
               <h4 className="tweet-user"><small className="text-muted">{tweet.username}</small></h4>
               <p>{tweet.message}</p>
           </div>
@@ -86,7 +105,7 @@ class User extends React.Component{
             <p>James
               <small className="text-muted">@james</small>
             </p>
-            <button className="btn btn-sm">Follow</button>
+            <button className="btn btn-sm btn-follow">Follow</button>
           </div>
         </div>
         <div className="media">
@@ -95,7 +114,7 @@ class User extends React.Component{
             <p>Messi
               <small className="text-muted">@messi</small>
             </p>
-            <button className="btn btn-sm">Follow</button>
+            <button className="btn btn-sm btn-follow">Follow</button>
           </div>
         </div>
         <div className="media">
@@ -104,7 +123,7 @@ class User extends React.Component{
             <p>Ronaldo
               <small className="text-muted">@ronaldo</small>
             </p>
-            <button className="btn btn-sm">Follow</button>
+            <button className="btn btn-sm btn-follow">Follow</button>
           </div>
         </div>
       </aside>

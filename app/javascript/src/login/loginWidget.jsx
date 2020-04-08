@@ -49,12 +49,12 @@ class LoginWidget extends React.Component {
       })
   }
 
-  render () {
+  render() {
     const { email, password, error } = this.state;
     return (
       <React.Fragment>
-      <img src="https://img.icons8.com/color/48/000000/twitter.png" style={{marginLeft: '45%'}}/>
-      <h3 style={{textAlign: "center",}}>Welcome to Twitter</h3>
+        <img src="https://img.icons8.com/color/48/000000/twitter.png" style={{ marginLeft: '45%' }} />
+        <h3 style={{ textAlign: "center", }}>Welcome to Twitter</h3>
         <form onSubmit={this.login}>
           <input name="username"
             type="text"
@@ -74,7 +74,7 @@ class LoginWidget extends React.Component {
           <button type="submit" className="btn btn-primary btn-block btn-lg">Log in</button>
           {error && <p className="text-danger mt-2">{error}</p>}
         </form>
-        <hr/>
+        <hr />
         <p className="mb-0">Don't have an account? <a className="text-primary" onClick={this.props.toggle}>Sign up</a></p>
       </React.Fragment>
     )
