@@ -9,4 +9,5 @@ class StaticPagesController < ApplicationController
     puts @data
     render 'user'
   end
+  
 end

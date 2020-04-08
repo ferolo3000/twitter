@@ -4,11 +4,14 @@ import ReactDOM from 'react-dom';
 import { safeCredentials, handleErrors } from '@utils/fetchHelper';
 
 class SignupWidget extends React.Component {
-  state = {
-    email: '',
-    password: '',
-    username: '',
-    error: '',
+  constructor(props) {
+    super(props)
+    this.state = {
+      email: '',
+      username: '',
+      password: '',
+      error: ''
+    }
   }
 
   handleChange = (e) => {
@@ -27,7 +30,6 @@ class SignupWidget extends React.Component {
       method: 'POST',
       body: JSON.stringify({
         user: {
-          email: this.state.email,
           password: this.state.password,
           username: this.state.username,
         }
@@ -37,6 +39,7 @@ class SignupWidget extends React.Component {
       .then(data => {
         if (data.user) {
           this.login();
+          alert("mmm");
         }
       })
       .catch(error => {
@@ -83,9 +86,30 @@ class SignupWidget extends React.Component {
       <img src="https://img.icons8.com/color/48/000000/twitter.png" style={{marginLeft: '45%'}}/>
       <h3 style={{textAlign: "center",}}>Welcome to Twitter</h3>
         <form onSubmit={this.signup}>
-          <input name="username" type="text" className="form-control form-control-lg mb-3" placeholder="Username" value={username} onChange={this.handleChange} required />
-          <input name="email" type="text" className="form-control form-control-lg mb-3" placeholder="Email" value={email} onChange={this.handleChange} required />
-          <input name="password" type="password" className="form-control form-control-lg mb-3" placeholder="Password" value={password} onChange={this.handleChange} required />
+          <input
+            name="username"
+            type="text"
+            className="form-control form-control-lg mb-3"
+            placeholder="Username"
+            value={this.state.username}
+            onChange={this.handleChange}
+            required />
+          <input
+            name="email"
+            type="text"
+            className="form-control form-control-lg mb-3"
+            placeholder="Email"
+            value={this.state.email}
+            onChange={this.handleChange}
+            required />
+          <input
+            name="password"
+            type="password"
+            className="form-control form-control-lg mb-3"
+            placeholder="Password"
+            value={this.state.password}
+            onChange={this.handleChange}
+            required />
           <button type="submit" className="btn btn-primary btn-block btn-lg">Sign up</button>
         </form>
         <hr/>

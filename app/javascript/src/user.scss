@@ -45,6 +45,20 @@ a {
   margin: 0;
 }
 
+.log-out {
+  background-color: #fff;
+  text-decoration: none;
+  border-color: #fff;
+  color: var(--main-link-color);
+}
+
+.log-out:hover {
+  background-color: #fff;
+  text-decoration: none;
+  border-color: #fff;
+  color: var(--link-color);
+}
+
 .nav-link {
   color: var(--main-link-color);
   text-decoration: none;

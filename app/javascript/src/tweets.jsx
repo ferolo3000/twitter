@@ -2,6 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Layout from '@src/layout';
+import User from './user'
 import update from 'immutability-helper'
 import { safeCredentials, handleErrors } from '@utils/fetchHelper';
 
@@ -12,7 +13,8 @@ class Tweets extends React.Component {
     super(props)
     this.state = {
       tweets: [],
-      message: ''
+      message: '',
+      username: ''
     }
   }
 
@@ -75,14 +77,27 @@ class Tweets extends React.Component {
   }
 
   render() {
-    console.log(this.state.tweets);
+    console.log(this.state.tweets, this.props.username_id);
     return (
-      <Layout>
+      <React.Fragment>
+      <nav className="navbar navbar-expand navbar-light bg-light">
+        <a href="/"><span className="navbar-brand mb-0 h1 text-primary">Twitter</span></a>
+        <div className="collapse navbar-collapse">
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              <a className="nav-link" href="/tweets">Home</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href={`/users/${this.props.username_id}`}>User</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
         <div className="row tweet-container">
           <div className="col-4 profile-trends">
             <div className="profileCard col-xs-12 wrapper">
               <div className="user-field col-xs-12">
-                <img className="img-circle profile-image" src="https://img.icons8.com/ultraviolet/40/000000/user.png" alt="user" /><br />
+                <img className="img-circle profile-tweet" src="https://img.icons8.com/ultraviolet/40/000000/user.png" alt="user" /><br />
               </div>
               <div className="user-stats">
                 <div className="col-xs-3 stats">
@@ -157,12 +172,22 @@ class Tweets extends React.Component {
             </div>
           </div>
         </div>
-      </Layout>
+      </React.Fragment>
     )
   }
 }
 
 export default Tweets
+
+// document.addEventListener('DOMContentLoaded', () => {
+//   const node = document.getElementById('params')
+//   const data = JSON.parse(node.getAttribute('data-params'))
+//
+//   ReactDOM.render(
+//     <Tweets username_id={data.username_id} />,
+//     document.body.appendChild(document.createElement('div')),
+//   )
+// })
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(

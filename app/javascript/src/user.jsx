@@ -1,7 +1,7 @@
 import React from "react"
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import axios from "axios"
+import { safeCredentials, handleErrors  } from '@utils/fetchHelper';
 
 import './user.scss';
 
@@ -11,22 +11,23 @@ class User extends React.Component{
     this.state = {
       userTweets: [],
     }
-
+    this.handleLogout = this.handleLogout.bind(this);
   };
-
-  //get users tweets
-  // getTweets() {
-  //   axios.get(`/api/users/${this.props.username_id}/tweets`)
-  //     .then(response => {
-  //       this.setState({ userTweets: response.data.tweets })
-  //     })
-  //     .catch(error => console.log(error))
-  // }
 
   componentDidMount() {
     fetch(`/api/users/${this.props.username_id}/tweets`)
       .then(response => response.json())
       .then(data => this.setState({ userTweets: data.tweets }));
+  }
+
+  handleLogout() {
+    fetch('/api/sessions', safeCredentials({
+      method: 'DELETE',
+    }))
+    .then(response => {
+      window.location = "/";
+    })
+    .catch(error => console.log(error))
   }
 
   render(){
@@ -37,8 +38,9 @@ class User extends React.Component{
       <ul className="nav">
         <li className="nav-item"><a className="nav-link" href="#">Twitter</a></li>
         <li className="nav-item"><a className="nav-link" href="/tweets">Home</a></li>
-        <li className="nav-item"><a className="nav-link" href="/">Log Out</a></li>
+        <button type="button" onClick={this.handleLogout} className="btn btn-light log-out" >Log Out</button>
       </ul>
+
       </nav>
       <header>
       <section className="profile">
