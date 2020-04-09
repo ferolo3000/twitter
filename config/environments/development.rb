@@ -38,6 +38,9 @@ Rails.application.configure do
   # Using the local settings for Active Storage
   config.active_storage.service = :local
 
+  # Using the Amazon S3 settings for Active Storage
+  config.active_storage.service = :amazon
+
   # Debug mode disables concatenation and preprocessing of assets.
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
