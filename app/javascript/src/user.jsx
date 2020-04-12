@@ -85,7 +85,7 @@ class User extends React.Component{
       {this.state.userTweets.map((tweet) => {
         return (
         <div className="media-user" key={tweet.id}>
-          <img className="media-image img-circle" src="https://img.icons8.com/ultraviolet/40/000000/user.png" alt="Random user" />
+          <img className="media-image img-circle" src="https://img.icons8.com/ultraviolet/40/000000/user.png" alt="user" />
           <div className="media-body">
           <button className="delete-tweet btn btn-sm float-right" onClick={(e) => this.deleteTweet(tweet.id)}><img src="https://img.icons8.com/small/16/000000/trash--v1.png"/></button><br />
               <h4 className="tweet-user"><small className="text-muted">{tweet.username}</small></h4>

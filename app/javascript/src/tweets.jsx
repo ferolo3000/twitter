@@ -151,7 +151,7 @@ class Tweets extends React.Component {
                 return (
                   <div className="tweet-card" key={tweet.id}>
                     <div className="tweet-content">
-                      <small className="tweet-username">@{tweet.username}</small><br />
+                    <a className="nav-link" href={`/users/${tweet.username}`}>@{tweet.username}</a>
                       <label className="tweet-msg">{tweet.message}</label>
                       <div className="col-sm-12 mt-1 d-flex">
                         <ul className="like-section">
